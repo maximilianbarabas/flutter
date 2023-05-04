@@ -5,8 +5,8 @@ void main() {
 }
 
 class Post {
-  String? body;
-  String? author;
+  String body;
+  String author;
   int likes = 89;
   bool userLiked = false;
 
@@ -116,7 +116,22 @@ class _PostListState extends State<PostList> {
       itemCount: this.widget.listItems.length,
       itemBuilder: (context, index) {
         var post = this.widget.listItems[index];
-        return Card();
+        return Card(
+            child: Row(children: <Widget>[
+          Expanded(
+              child: ListTile(
+            title: Text(post.body),
+            subtitle: Text(post.author),
+          )),
+          Row(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.thumb_up),
+                onPressed: post.likePost,
+              )
+            ],
+          )
+        ]));
       },
     );
   }
