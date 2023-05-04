@@ -37,11 +37,30 @@ class TextInputWidget extends StatefulWidget {
 }
 
 class _TextInputWidgetState extends State<TextInputWidget> {
+  final controller = TextEditingController();
+  String text = "";
+
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  void changeText(text) {
+    setState(() {
+      this.text = text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-          prefixIcon: Icon(Icons.message), labelText: "Type a message:"),
-    );
+    return Column(children: <Widget>[
+      TextField(
+        controller: this.controller,
+        decoration: InputDecoration(
+            prefixIcon: Icon(Icons.message), labelText: "Type a message:"),
+        onChanged: (text) => this.changeText(text),
+      ),
+      Text(this.text)
+    ]);
   }
 }
