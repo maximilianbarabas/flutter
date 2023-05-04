@@ -25,16 +25,23 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Hello World')),
-        body: Column(
-          children: <Widget>[TestWidget(), TestWidget(), TestWidget()],
-        ));
+        appBar: AppBar(title: Text('Hello World')), body: TextInputWidget());
   }
 }
 
-class TestWidget extends StatelessWidget {
+class TextInputWidget extends StatefulWidget {
+  const TextInputWidget({super.key});
+
+  @override
+  State<TextInputWidget> createState() => _TextInputWidgetState();
+}
+
+class _TextInputWidgetState extends State<TextInputWidget> {
   @override
   Widget build(BuildContext context) {
-    return Text('Hello world');
+    return TextField(
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.message), labelText: "Type a message:"),
+    );
   }
 }
