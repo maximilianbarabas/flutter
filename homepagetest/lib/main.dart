@@ -21,19 +21,39 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String text = "";
+
+  void changeText(String text) {
+    this.setState(() {
+      this.text = text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Hello World')), body: TextInputWidget());
+        appBar: AppBar(title: Text('Hello World')),
+        body: Column(children: <Widget>[
+          TextInputWidget(this.changeText),
+          Text(this.text)
+        ]));
   }
 }
 
 class TextInputWidget extends StatefulWidget {
-  const TextInputWidget({super.key});
+  final Function(String) callback;
+
+  TextInputWidget(this.callback);
 
   @override
-  State<TextInputWidget> createState() => _TextInputWidgetState();
+  _TextInputWidgetState createState() => _TextInputWidgetState();
 }
 
 class _TextInputWidgetState extends State<TextInputWidget> {
@@ -41,6 +61,11 @@ class _TextInputWidgetState extends State<TextInputWidget> {
   void dispose() {
     super.dispose();
     controller.dispose();
+  }
+
+  void click() {
+    widget.callback(controller.text);
+    controller.clear();
   }
 
   @override
@@ -52,7 +77,9 @@ class _TextInputWidgetState extends State<TextInputWidget> {
             labelText: "Type a message:",
             suffixIcon: IconButton(
               icon: Icon(Icons.send),
-              onPressed: () => {},
+              splashColor: Colors.blue,
+              tooltip: "Post message",
+              onPressed: this.click,
             )));
   }
 }
