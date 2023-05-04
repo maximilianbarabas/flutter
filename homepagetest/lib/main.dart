@@ -43,7 +43,7 @@ class _TextInputWidgetState extends State<TextInputWidget> {
   void dispose() {
     super.dispose();
     controller.dispose();
-
+  }
 
   void changeText(text) {
     if (text == "Hello world!") {
